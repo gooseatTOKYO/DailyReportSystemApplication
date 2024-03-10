@@ -115,24 +115,17 @@ public class EmployeeController {
 
     // 従業員更新画面
     @GetMapping(value = "/{code}/update")
-    public String edit(@ModelAttribute Employee employee) {
+    public String edit(@PathVariable String code,Model model) {
+        model.addAttribute("employee", employeeService.findByCode(code));
         return "employees/update";
     }
 
  // 従業員更新登録処理
     @PostMapping(value = "/{code}/update")
     public String update(@PathVariable String code,@Validated Employee employee, BindingResult res, Model model) {
-
-        // パスワード空白チェック
-        if ("".equals(employee.getPassword())) {
-            // パスワードが空白だった場合はそのままテーブルにあるパスワードを使用する
-            model.addAttribute("employee", employeeService.findByCode(code));
-             return edit(employee);
-         }
-
         // 入力チェック
          if (res.hasErrors()) {
-             return edit(employee);
+             return "employees/update";
          }
 
         // 論理削除を行った従業員番号を指定すると例外となるためtry~catchで対応
@@ -142,15 +135,17 @@ public class EmployeeController {
 
             if (ErrorMessage.contains(result)) {
                  model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
-                 return edit(employee);
+                 return "employees/update";
              }
 
          } catch (DataIntegrityViolationException e) {
              model.addAttribute(ErrorMessage.getErrorName(ErrorKinds.DUPLICATE_EXCEPTION_ERROR),
                      ErrorMessage.getErrorValue(ErrorKinds.DUPLICATE_EXCEPTION_ERROR));
-             return edit(employee);
+             return "employees/update";
          }
 
         return "redirect:/employees";
     }
+
 }
+

@@ -52,6 +52,31 @@ public class EmployeeService {
         return ErrorKinds.SUCCESS;
     }
 
+    //従業員更新
+    @Transactional
+    public ErrorKinds update(Employee employee) {
+        Employee existEmployee = findByCode(employee.getCode());
+        // パスワードチェック
+        if(!"".equals(employee.getPassword())){
+            ErrorKinds result = employeePasswordCheck(employee);
+            if (ErrorKinds.CHECK_OK != result) {
+                return result;
+            }
+        } else {
+
+            employee.setPassword(existEmployee.getPassword());
+        }
+
+        employee.setDeleteFlg(false);
+
+        LocalDateTime now = LocalDateTime.now();
+        employee.setUpdatedAt(now);//更新日時
+        employee.setCreatedAt(existEmployee.getCreatedAt());//テーブル内容の登録日時の更新
+
+        employeeRepository.save(employee);
+        return ErrorKinds.SUCCESS;
+    }
+
     // 従業員削除
     @Transactional
     public ErrorKinds delete(String code, UserDetail userDetail) {
@@ -119,29 +144,6 @@ public class EmployeeService {
         return passwordLength < 8 || 16 < passwordLength;
     }
 
-    // 従業員更新
-    @Transactional
-    public ErrorKinds update(Employee employee) {
-
-        // パスワードチェック
-        ErrorKinds result = employeePasswordCheck(employee);
-        if (ErrorKinds.CHECK_OK != result) {
-            return result;
-        }
-
-        // 従業員番号重複チェック
-        if (findByCode(employee.getCode()) != null) {
-            return ErrorKinds.DUPLICATE_ERROR;
-        }
-
-        employee.setDeleteFlg(false);
-
-        LocalDateTime now = LocalDateTime.now();
-        employee.setCreatedAt(now);
-        employee.setUpdatedAt(now);
-
-        employeeRepository.save(employee);
-        return ErrorKinds.SUCCESS;
-    }
+    //
 
 }

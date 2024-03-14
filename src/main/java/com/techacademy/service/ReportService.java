@@ -22,11 +22,9 @@ public class ReportService {
     private final ReportRepository reportRepository;
 
     @Autowired
-    public ReportService(ReportRepository reportRepository, PasswordEncoder passwordEncoder) {
+    public ReportService(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }
-
-
 
     // 従業員一覧表示処理
     public List<Report> findAll() {

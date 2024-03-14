@@ -42,15 +42,15 @@ public class ReportsController {
 
         return "reports/list";
     }
-//
-//    // 日報詳細画面
-//    @GetMapping(value = "/{code}/")
-//    public String detail(@PathVariable String code, Model model) {
-//
-//        model.addAttribute("report", reportService.findByCode(code));
-//        return "reports/detail";
-//    }
-//
+
+    // 日報詳細画面
+    @GetMapping(value = "/{id}/")
+    public String detail(@PathVariable Integer id, Model model) {
+
+        model.addAttribute("report", reportService.findById(id));
+        return "reports/detail";
+    }
+
 //    // 日報新規登録画面
 //    @GetMapping(value = "/add")
 //    public String create(@ModelAttribute Report report) {
@@ -111,12 +111,12 @@ public class ReportsController {
 //        return "redirect:/reports";
 //    }
 //
-//    // 日報更新画面
-//    @GetMapping(value = "/{code}/update")
-//    public String edit(@PathVariable String code,Model model) {
-//        model.addAttribute("reports", reportService.findByCode(code));
-//        return "reports/update";
-//    }
+    // 日報更新画面
+    @GetMapping(value = "/{id}/update")
+    public String edit(@PathVariable Integer id,Model model) {
+        model.addAttribute("report", reportService.findById(id));
+        return "reports/update";
+    }
 //
 // // 日報更新登録処理
 //    @PostMapping(value = "/{code}/update")

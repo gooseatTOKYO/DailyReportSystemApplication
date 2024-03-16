@@ -18,7 +18,9 @@ import com.techacademy.constants.ErrorKinds;
 import com.techacademy.constants.ErrorMessage;
 
 import com.techacademy.entity.Report;
+
 import com.techacademy.service.ReportService;
+
 
 import com.techacademy.service.UserDetail;
 
@@ -51,12 +53,12 @@ public class ReportsController {
         return "reports/detail";
     }
 
-//    // 日報新規登録画面
-//    @GetMapping(value = "/add")
-//    public String create(@ModelAttribute Report report) {
-//
-//        return "reports/new";
-//    }
+    // 日報新規登録画面
+    @GetMapping(value = "/add")
+    public String create(@ModelAttribute Report report,Model model,String name,@AuthenticationPrincipal UserDetail userDetail) {
+        report.setEmployee(userDetail.getEmployee());
+        return "reports/new";
+    }
 //
 //    // 日報新規登録処理
 //    @PostMapping(value = "/add")
@@ -113,8 +115,12 @@ public class ReportsController {
 //
     // 日報更新画面
     @GetMapping(value = "/{id}/update")
-    public String edit(@PathVariable Integer id,Model model) {
-        model.addAttribute("report", reportService.findById(id));
+    public String edit(@PathVariable Integer id,Report report,Model model) {
+        if(id != null) {
+            report =  reportService.findById(id);
+        }
+        model.addAttribute("report", report);
+
         return "reports/update";
     }
 //

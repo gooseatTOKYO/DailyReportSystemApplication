@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import com.techacademy.constants.ErrorKinds;
@@ -14,6 +15,7 @@ import com.techacademy.entity.Employee;
 import com.techacademy.entity.Report;
 import com.techacademy.entity.Report;
 import com.techacademy.repository.ReportRepository;
+import com.techacademy.repository.EmployeeRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReportService {
 
     private final ReportRepository reportRepository;
+    private final EmployeeRepository employeeRepository;
+
 
     @Autowired
-    public ReportService(ReportRepository reportRepository) {
+    public ReportService(ReportRepository reportRepository,EmployeeRepository employeeRepository) {
         this.reportRepository = reportRepository;
+        this.employeeRepository =employeeRepository;
     }
 
     // 日報保存
@@ -48,6 +53,11 @@ public class ReportService {
             reportRepository.save(report);
             return ErrorKinds.SUCCESS;
     }
+
+//    //ログインユーザの権限を調べる
+//    public List<Report> findByRole(@AuthenticationPrincipal UserDetail userDetail) {
+//        return reportRepository.findAll();
+//    }
 
     // 日報一覧表示処理
     public List<Report> findAll() {

@@ -128,7 +128,6 @@ public class EmployeeController {
 
         // 入力チェック
          if (res.hasErrors()) {
-             //ErrorMessage.getErrorValue(ErrorKinds.DUPLICATE_EXCEPTION_ERROR);
              return "employees/update";
          }
          ErrorKinds result = employeeService.update(employee);

@@ -18,6 +18,21 @@ public enum ErrorKinds {
     LOGINCHECK_ERROR,
     // 日付チェックエラー
     DATECHECK_ERROR,
+
+
+    //日付空白チェックエラー
+    DATEBLANKCHECK_ERROR,
+    //日付重複エラー
+    DUPLICATE_DATE_ERROR,
+    //タイトル空白チェックエラー
+    TITLEBLANK_ERROR,
+    //タイトル桁数チェックエラー
+    TITLERANGECHECK_ERROR,
+    //内容空白チェックエラー
+    CONTENTBLANK_ERROR,
+    //内容桁数チェックエラー
+    CONTENTRANGE_ERROR,
+
     // チェックOK
     CHECK_OK,
     // 正常終了

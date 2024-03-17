@@ -43,12 +43,13 @@ public class Report {
 
     // タイトル
     @NotEmpty
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
+    @Length(max = 100)
     private String title;
 
     //内容
     @NotEmpty
-    @Column(columnDefinition="LONGTEXT")
+    @Column(columnDefinition="LONGTEXT",nullable = false)
     @Length(max = 600)
     private String content;
 

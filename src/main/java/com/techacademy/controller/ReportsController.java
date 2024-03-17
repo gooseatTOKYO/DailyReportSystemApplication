@@ -39,10 +39,10 @@ public class ReportsController {
 
       if( userDetail.getEmployee().getRole() == Employee.Role.ADMIN ){
           model.addAttribute("listSize", reportService.findAll().size());
-          model.addAttribute("reportsList", reportService.findAll());
+          model.addAttribute("reportList", reportService.findAll());
       }else{
           model.addAttribute("listSize", reportService.findByEmployee(userDetail.getEmployee()).size());
-          model.addAttribute("reportsList", reportService.findByEmployee(userDetail.getEmployee()));
+          model.addAttribute("reportList", reportService.findByEmployee(userDetail.getEmployee()));
       }
         return "reports/list";
     }
